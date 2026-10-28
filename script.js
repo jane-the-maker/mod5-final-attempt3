@@ -42,13 +42,13 @@ async function fetchMovies(searchTerm) {
   showSkeletons();
 
   const res = await fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${searchTerm}`);
-  const date = await res.json();
+  const data = await res.json();
   
-  if (DataTransfer.Response === 'True') {
-    currentMovies = DataTransfer.Search;
+  if (data.Response === 'True') {
+    currentMovies = data.Search;
     resultsInfo.textContent = `Showing: ${searchTerm}`;
-    sortSelect.value = 'default';
-    displayMovies(currentMOvies);
+    resultsInfo.value = 'default';
+    displayMovies(currentMovies);
   } else {
     resultsInfo.textContent = `Showing: ${searchTerm}`;
     moviesGrid.innerHTML = '<p>No movies found.</p>';
@@ -64,7 +64,7 @@ function displayMovies(movies) {
     return `
       <div class="movie-card">
         <imgclass="movie-card__img"src=${poster}alt=${movie.Title}/>
-        <h2 class="movie-card__title">${movie.Title}/h2>
+        <h2 class="movie-card__title">${movie.Title}</h2>
         <p class="movie-card__year">${movie.Year}</p>
       </div>
   `;
